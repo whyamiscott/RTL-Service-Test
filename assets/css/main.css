@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+}
+
+html {
+	font-size: 16px;
+	line-height: 1.25;
+	font-family: sans-serif;
+}
+
+.device {
+	padding: 1em;
+	background: black;
+	color: white;
+}
+
+.device:nth-child(odd) {
+	background: pink;
+}
