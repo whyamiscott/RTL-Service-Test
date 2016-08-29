@@ -1,4 +1,5 @@
-* {
+*,
+.leaflet-popup-content p {
 	margin: 0;
 }
 
@@ -8,12 +9,41 @@ html {
 	font-family: sans-serif;
 }
 
+main {
+	height: 100vh;
+	background: #dddddd;
+	font-size: 0;
+}
+
+.devices,
+.map {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	overflow-y: scroll;
+	font-size: 1rem;
+}
+
+.devices {
+	width: 25%;
+}
+
+.map {
+	width: 75%;
+}
+
 .device {
 	padding: 1em;
-	background: black;
+	background: #257eca;
 	color: white;
+	cursor: pointer;
 }
 
 .device:nth-child(odd) {
-	background: pink;
+	background: #2538ca;
+}
+
+.leaflet-popup hr,
+.device hr {
+	margin: 0.5em 0;
 }

@@ -20,7 +20,7 @@ class Device {
 		this.location = {
 			lon: Math.round(Math.random() * 1) ? Math.random() * 180 : Math.random() * -180,
 			lat: Math.round(Math.random() * 1) ? Math.random() * 90 : Math.random() * -90,
-			alt: 'The strange tides'
+			alt: 0
 		}
 		this.locationGenerationFreg = locationGenerationFreg | 500;
 		this.statusGenerationFreg = statusGenerationFreg | 1000;
@@ -28,6 +28,7 @@ class Device {
 		this.statusGenerationError = Math.round(Math.round(Math.random() * 1) ? Math.random() * 50 : Math.random() * -50);
 
 		setInterval(this.randomChangeStatus, 5000, this);
+		setInterval(this.randomChangeLocation, 1000, this);
 	}
 
 	randomChangeStatus(that) {
@@ -41,6 +42,27 @@ class Device {
 		if (changeName) {
 			that.status.name = Math.round(Math.random() * 42);
 		}
+	}
+
+	randomChangeLocation(that) {
+		let changeLon = Math.round(Math.random() * 1),
+			changeLat = Math.round(Math.random() * 1),
+			changeAlt = Math.round(Math.random() * 1);
+
+			if (changeLon) {
+				let currentVal = that.location.lon;
+				that.location.lon = Math.round(Math.random() * 1) ? currentVal + 0.05 : currentVal - 0.05;
+			}
+
+			if (changeLat) {
+				let currentVal = that.location.lat;
+				that.location.lat = Math.round(Math.random() * 1) ? currentVal + 0.05 : currentVal - 0.05;
+			}
+
+			if (changeAlt) {
+				let currentVal = that.location.alt;
+				that.location.alt = Math.round(Math.random() * 1) ? currentVal + 1 : currentVal - 1;
+			}
 	}
 
 	setIntervalForMethod(method, time) {
@@ -81,7 +103,6 @@ class Device {
 		}
 	}
 }
-
 
 let devices = [];
 const N = 1000;
@@ -128,19 +149,25 @@ wsServer.on('connection', (ws) => {
 });
 
 function wsSendMsg(ws, device, type) {
+	let msg;
+
 	switch (type) {
 		case 'location':
-			ws.send(JSON.stringify(device.getLocationPacket()));
+			msg = JSON.stringify(device.getLocationPacket());
 			break;
 		case 'status':
-			ws.send(JSON.stringify(device.getStatusPacket()));
+			msg = JSON.stringify(device.getStatusPacket());
 			break;
 		case 'device':
-			ws.send(JSON.stringify(device.getDevicePacket()));
+			msg = JSON.stringify(device.getDevicePacket());
 			break;
 		default:
 			console.log('Unknown type of packet.');
+			return false;
 	}
+
+	try {ws.send(msg)}
+	catch(e) {};
 }
 
 app.route('/')

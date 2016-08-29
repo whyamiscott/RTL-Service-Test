@@ -6,8 +6,15 @@ html(lang="ru")
 		title RTL Service Test
 		meta(name="description", content="")
 		meta(name="viewport" content="width=device-width, initial-scale=1")
+		link(rel="stylesheet" href="libs/leaflet/leaflet.css")
+		link(rel="stylesheet" href="libs/leaflet/MarkerCluster.css")
+		link(rel="stylesheet" href="libs/leaflet/MarkerCluster.Default.css")
 		link(rel="stylesheet" href="css/main.css")
 	body
-		div(id="devices")
+		main
+			div(class="devices", id="devices")
+			div(class="map", id="map")
 
+		script(src="libs/leaflet/leaflet.js" defer)
+		script(src="libs/leaflet/leaflet.markercluster.js" defer)
 		script(src="js/main.js" defer)
